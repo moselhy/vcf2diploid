@@ -9,14 +9,15 @@ class Variant
     private String[] _alts;
     private int      _maternal = 0, _paternal = 0;
     private boolean  _isPhased = false; // Phasing
-    private static final Random _rand = new Random();
+    private static Random _rand;
     
-    public Variant(int chr,int pos,int del,String[] alts,String phase)
+    public Variant(int chr,int pos,int del,String[] alts,String phase,long seed)
     {
 	_chr  = chr;
 	_pos  = pos;
 	_del  = del;
 	_alts = new String[alts.length];
+	_rand = new Random(seed);
 	for (int i = 0;i < alts.length;i++) _alts[i] = new String(alts[i]);
 	
 	phase = phase.trim();

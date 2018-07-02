@@ -18,7 +18,7 @@ public class VCF2diploid
     private ArrayList<Variant>[] _variants = new ArrayList[86];
 	
     public VCF2diploid(String[] chrFiles,String[] vcfFiles,
-		       String id,boolean pass)
+		       String id,boolean pass,long seed)
     {
 	_chrFiles = chrFiles;
 	_vcfFiles = vcfFiles;
@@ -28,7 +28,7 @@ public class VCF2diploid
 	    _variants[i] = new ArrayList<Variant>(128);
 
 	for (int i = 0;i < vcfFiles.length;i++) {
-	    VCFparser parser = new VCFparser(vcfFiles[i],_id,pass);
+	    VCFparser parser = new VCFparser(vcfFiles[i],_id,pass,seed);
 	    int n_ev = 0,var_nucs = 0;
 	    while (parser.hasMoreInput()) {
 	    	Variant var = parser.parseLine();
@@ -496,9 +496,10 @@ public class VCF2diploid
 	ArrayList<String> vcfFiles = new ArrayList<String>(1);
 	String id = "";
 	boolean pass = false;
+	long seed = System.currentTimeMillis();
 
 	String usage = "Usage:\n";
-	usage += "\tvcf2diploid -id sample_id [-pass] ";
+	usage += "\tvcf2diploid -id sample_id [-pass] [-seed rngSeed]";
 	usage += "-chr file.fa ... ";
 	usage += "[-vcf file.vcf ...]\n";
 	usage += "\tvcf2diploid -version\n";
@@ -520,6 +521,9 @@ public class VCF2diploid
 	    } else if (args[i].equals("-pass")) {
 		pass = true;
 	    }
+		else if (args[i].equals("-seed") ) {
+		if (++i < args.length) seed = Long.parseLong(args[i]); 
+	    }
 	}
 
 	if (id.length() <= 0) {
@@ -540,7 +544,7 @@ public class VCF2diploid
 	VCF2diploid maker =
 	    new VCF2diploid(chrFiles.toArray(new String[0]),
 			    vcfFiles.toArray(new String[0]),
-			    id,pass);
+			    id,pass,seed);
 	maker.makeDiploid();
     }
 

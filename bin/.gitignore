@@ -1,0 +1,12 @@
+/.classpath
+/.project
+/CITATION
+/DiploidManifest
+/Makefile
+/README
+/VCF2diploid$Sequence.class
+/VCF2diploid.class
+/VCFparser.class
+/Variant.class
+/create_distribution.sh
+/license.rtf

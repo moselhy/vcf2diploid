@@ -12,8 +12,9 @@ class VCFparser
     private int            _id_ind = -1;
     private String _id = "";
     private boolean _pass = false;
+    private long _seed;
     
-    public VCFparser(String fileName,String id,boolean pass)
+    public VCFparser(String fileName,String id,boolean pass,long seed)
     {
 	try {
 	    _fin = new FileInputStream(fileName);
@@ -30,6 +31,7 @@ class VCFparser
 	}
 	if (id != null) _id = id;
 	_pass = pass;
+	_seed = seed;
     }
     
     public boolean hasMoreInput()
@@ -47,12 +49,12 @@ class VCFparser
 	StringTokenizer toks = new StringTokenizer(line);
 	if (line.startsWith("#")) {
 	    if (line.startsWith("#CHROM")) {
-		int index = 0;
-		while (toks.hasMoreTokens()) {
-		    index++;
-		    String tok = toks.nextToken();
-		    if (tok.equals(_id)) _id_ind = index;
-		}
+			int index = 0;
+			while (toks.hasMoreTokens()) {
+			    index++;
+			    String tok = toks.nextToken();
+			    if (tok.equals(_id)) _id_ind = index;
+			}
 	    }
 	    return null;
 	}
@@ -60,7 +62,7 @@ class VCFparser
 
 	int index = 0,genotype_ind = -1;
 	int chr = -1,pos = -1;
-	String REF = "",FILTER = "",ALT = "",phase = "0/0",INFO = "";
+	String REF = "",FILTER = "",ALT = "",phase = "1/0",INFO = "";
 	while (toks.hasMoreTokens()) {
 	    index++;
 	    if (index == 1) // Parsing chromosome
@@ -146,7 +148,7 @@ class VCFparser
 	    // System.out.println(pos);
 	}
 
-	return new Variant(chr,pos,REF.length(),alts,phase);
+	return new Variant(chr,pos,REF.length(),alts,phase,_seed);
     }
 
     private void readLine()
