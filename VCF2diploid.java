@@ -499,7 +499,7 @@ public class VCF2diploid
 	long seed = System.currentTimeMillis();
 
 	String usage = "Usage:\n";
-	usage += "\tvcf2diploid -id sample_id [-pass] [-seed rngSeed]";
+	usage += "\tvcf2diploid -id sample_id [-pass] [-seed rngSeed] ";
 	usage += "-chr file.fa ... ";
 	usage += "[-vcf file.vcf ...]\n";
 	usage += "\tvcf2diploid -version\n";
