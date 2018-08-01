@@ -9,10 +9,11 @@ $ make
 2. Running
 ==========
 
-java -jar vcf2diploid.jar -id sample_id -chr file.fa ... [-vcf file.vcf ...]
+java -jar vcf2diploid.jar -id sample_id -chr file.fa ... [-seed rngSeed] [-nochains] [-vcf file.vcf ...]
 
-where sample_id is the ID of individual whose genome is being constructed
-(e.g., NA12878), file.fa is FASTA file(s) with reference sequence(s), and
+the -nochains parameter does not let the program output chain files
+where rngSeed is the seed for the random number generator, sample_id is the ID of individual
+whose genome is being constructed (e.g., NA12878), file.fa is FASTA file(s) with reference sequence(s), and
 file.vcf is VCF4.0 file(s) with variants. One can specify multiple FASTA and
 VCF files at a time. Splitting the whole genome in multiple files (e.g., with
 one FASTA file per chromosome) reduces memory usage.
